@@ -1,0 +1,4 @@
+--Pseudocode for Step 3--
+1 -     Write a function that loops through the Library array and displays a specific book.
+2 -     Create a form in HTML that can accept answers.
+3 -     Link the function and the form 
