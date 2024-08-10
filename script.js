@@ -1,30 +1,34 @@
 const myLibrary = [];
-const author = document.getElementById('author').value;
-const title = document.getElementById('title').value;
-const year = document.getElementById('year').value;
-const pages = document.getElementById('pages').value;
-const read = document.getElementById('read').value;
+let author = document.getElementById('title').value;
+let title = document.getElementById('author').value;
+let year = document.getElementById('year').value;
+let pages = document.getElementById('pages').value;
+let read = document.getElementById('read').value;
 
+document.getElementById('cardTitle').textContent = `Title: ${title}`
 document.getElementById('cardAuthor').textContent = `Author: ${author}`
-document.getElementById('cardAuthor').textContent = `Title: ${title}`
-document.getElementById('cardAuthor').textContent = `Year: ${year}`
-document.getElementById('cardAuthor').textContent = `Pages: ${pages}`
-document.getElementById('cardAuthor').textContent = `Read: ${read}`
+document.getElementById('cardYear').textContent = `Year: ${year}`
+document.getElementById('cardPages').textContent = `Pages: ${pages}`
+document.getElementById('cardRead').textContent = `Read: ${read}`
 
-document.getElementsByClassName("card-form").addEventListener('submit', function (event) {
-    event.preventDefault()
+let addBook = document.getElementById('addBook')
+let cardForm = document.getElementById('cardForm')
+
+addBook.addEventListener('click', () => {
+    addBook.classList.remove('card-form')
+    console.log('this works')
 })
 
-function Book (author, title, year, pages, read) {
-    this.author = author;
+function Book (title, author, year, pages, read) {
     this.title  = title;
+    this.author = author;
     this.year   = year;
     this.pages  = pages;
     this.read   = read;
 };
 
-function addBookToLibrary (author, title, year, read) {
-    let newBook = new Book(author, title, year, read);
+function addBookToLibrary (title, author, year, pages, read) {
+    let newBook = new Book(title, author, year, pages, read);
     myLibrary.push(newBook);
 };
 
@@ -35,11 +39,11 @@ addBookToLibrary ("Stranger", "Camus", 1939, 125, "Yes");
 function displayBook () {
     let displayText = '';
     for (const obj of myLibrary) {
-        displayText += `Author: ${obj.author}, Title: ${obj.title}, Year: ${obj.year}, Read: ${obj.read}\n`;
+        displayText += `Title: ${obj.title}, Author: ${obj.author}, Year: ${obj.year}, Pages: ${obj.pages}, Read: ${obj.read}\n`;
     }
     
 };
 
-displayBook();
+// displayBook();
 
-console.log(myLibrary);
+// console.log(myLibrary);

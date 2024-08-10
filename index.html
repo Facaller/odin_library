@@ -15,12 +15,13 @@
     </section>
     <section class="main-content">
         <div class="card">
-            <form class="card-form" action="">
-                <label for="author">Author:</label>
-                <input type="text" name="author" id="author" required>
+            <form class="card-form" id="cardForm" action="">
 
                 <label for="title">Title:</label>
                 <input type="text" name="title" id="title" required>
+
+                <label for="author">Author:</label>
+                <input type="text" name="author" id="author" required>
 
                 <label for="year">Year:</label>
                 <input type="number" name="year" id="year" required>
@@ -35,11 +36,11 @@
             </form>
         </div>
         <div class="card">
-            <button type="submit">New Book</button>
+            <button class="add-book" id="addBook" type="submit">New Book</button>
         </div>
         <div class="card">
+            <h2 id="cardTitle"></h2>
             <p id="cardAuthor"></p>
-            <p id="cardTitle"></p>
             <p id="cardYear"></p>
             <p id="cardPages"></p>
             <p id="cardRead"></p>

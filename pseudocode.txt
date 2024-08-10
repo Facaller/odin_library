@@ -1,4 +1,13 @@
---Pseudocode for Step 3--
+** General App Idea**
+
+1 -     Create a form, 'New Book' button, and an empty card.
+2 -     Only the button should be visible at first.
+3 -     After button click, bring forward the form on a card.
+4 -     The form details are put to a new empty card. New card has a spot on page.
+5 -     The process should be repeatable, with new cards being added to the page.
+
+-- Pseudocode for Step 4 --
+
 1 -     Write a function that loops through the Library array and displays a specific book.
 2 -     Create a form in HTML that can accept answers.
-3 -     Link the function and the form 
+3 -     Link the function and the form.
