@@ -15,7 +15,7 @@ let addBook = document.getElementById('addBook')
 let cardForm = document.getElementById('cardForm')
 
 addBook.addEventListener('click', () => {
-    addBook.classList.remove('card-form')
+    document.getElementById('cardForm').style.display = "block";
     console.log('this works')
 })
 
