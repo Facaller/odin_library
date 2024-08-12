@@ -2,13 +2,14 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    background-color: #FCD581;
 }
 
-.card {
-    position: relative;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    z-index: 1;
+.main-content {
+    background-color: rgb(255 255 255 / 30%);
+    width: 400px;
+    height: 600px;
+    padding: 20px;
 }
 
 .card-form {
@@ -19,6 +20,12 @@
     transform: translate(-50%, -50%);
     z-index: 9;
     max-width: 300px;
-    padding: 10px;
-    background-color: bisque;
+    padding: 20px;
+    background-color: rgb(255 255 255 / 30%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.blur {
+    filter: blur(3px);
 }

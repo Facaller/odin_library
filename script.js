@@ -11,11 +11,13 @@ document.getElementById('cardYear').textContent = `Year: ${year}`
 document.getElementById('cardPages').textContent = `Pages: ${pages}`
 document.getElementById('cardRead').textContent = `Read: ${read}`
 
-let addBook = document.getElementById('addBook')
-let cardForm = document.getElementById('cardForm')
-
+let addBook = document.getElementById('addBook');
+let cardForm = document.getElementById('cardForm');
+let mainContent = document.getElementById('mainContent');
+//add position fixed overlay to area behind form, make main content area first
 addBook.addEventListener('click', () => {
     document.getElementById('cardForm').style.display = "block";
+    document.getElementById('mainContent').classList.add('blur');
     console.log('this works')
 })
 
