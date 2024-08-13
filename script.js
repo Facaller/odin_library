@@ -17,7 +17,10 @@ let mainContent = document.getElementById('mainContent');
 //add position fixed overlay to area behind form, make main content area first
 addBook.addEventListener('click', () => {
     document.getElementById('cardForm').style.display = "block";
-    document.getElementById('mainContent').classList.add('blur');
+    let overlay = document.createElement('section');
+    overlay.id = 'overlay';
+    document.body.appendChild(overlay);
+    document.getElementById('overlay').classList.add('overlay');
     console.log('this works')
 })
 
