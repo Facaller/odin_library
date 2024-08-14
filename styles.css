@@ -1,3 +1,30 @@
+@font-face {
+    font-family: 'andbasr';
+    src:
+        url(./andbasr-webfont.woff2) format('woff2'),
+        url(./andbasr-webfont.woff) format('woff');
+        font-weight: normal;
+        font-style: normal;
+}
+
+@font-face {
+    font-family: 'dalekpinpoint';
+    src:
+        url(./dalekpinpointbold-webfont.woff2) format('woff2'),
+        url(./dalekpinpointbold-webfont.woff) format('woff');
+        font-weight: normal;
+        font-style: normal;
+}
+
+@font-face {
+    font-family: 'romanica';
+    src:
+        url(./romanica-webfont.woff2) format('woff2'),
+        url(./romanica-webfont.woff) format('woff');
+        font-weight: normal;
+        font-style: normal;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -12,6 +39,14 @@ html, body {
     align-items: center;
 }
 
+h2 {
+    font-family: 'romanica'
+}
+
+p, form, input, button {
+    font-family: 'andbasr';
+}
+
 .overlay {
     position: fixed;
     top: 50%;
@@ -22,6 +57,7 @@ html, body {
     background-color: rgba(0,0,0,0.5);
     z-index: 2;
     filter: blur(3px);
+    /* transition: opacity 2s ease, background-color 2s ease, filter 2s ease; fix this */
 }
 
 .main-content {
@@ -40,10 +76,21 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 9;
+    z-index: 3;
     max-width: 300px;
     padding: 20px;
     background-color: rgb(255 255 255 / 30%);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card {
+    display: grid;
+    padding: 1rem;
+    height: 230px;
+    border-left: 7px solid #FFD700;
+    border-radius: 4px;
+    box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.1);
+    color: #666666;
+    background-color: #FFFFFF;
 }

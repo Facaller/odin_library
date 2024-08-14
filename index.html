@@ -8,19 +8,22 @@
     
 </head>
 <body>
-    <section>
-        <div class="card-form" id="cardForm" >
-            <form action="">
-                <label for="title">Title:</label>
-                <input type="text" name="title" id="title" required>
-                <label for="author">Author:</label>
-                <input type="text" name="author" id="author" required>
-                <label for="year">Year:</label>
-                <input type="number" name="year" id="year" required>
-                <label for="pages">Pages:</label>
-                <input type="number" name="pages" id="pages" required>
-                <label for="read">Read:</label>
-                <input type="checkbox" name="read" id="read" required>
+    <section class="card-form" id="cardForm">
+        <div>
+            <form class="card" action="">
+                <p>New Book Entry</p>
+                <label for="title"></label>
+                <input type="text" name="title" id="title" placeholder="Title" required>
+                <label for="author"></label>
+                <input type="text" name="author" id="author" placeholder="Author" required>
+                <label for="year"></label>
+                <input type="number" name="year" id="year" placeholder="Year published" required>
+                <label for="pages"></label>
+                <input type="number" name="pages" id="pages" placeholder="Pages" required>
+                <div>
+                    <label for="read">Read:</label>
+                    <input type="checkbox" name="read" id="read" required>
+                </div>
                 <button type="submit">Submit</button>
             </form>
         </div>
