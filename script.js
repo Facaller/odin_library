@@ -1,20 +1,23 @@
 const myLibrary = [];
-let author = document.getElementById('title').value;
-let title = document.getElementById('author').value;
-let year = document.getElementById('year').value;
-let pages = document.getElementById('pages').value;
-let read = document.getElementById('read').value;
 
-document.getElementById('cardTitle').textContent = `Title: ${title}`
-document.getElementById('cardAuthor').textContent = `Author: ${author}`
-document.getElementById('cardYear').textContent = `Year: ${year}`
-document.getElementById('cardPages').textContent = `Pages: ${pages}`
-document.getElementById('cardRead').textContent = `Read: ${read}`
+let author  = document.getElementById('title');
+let title   = document.getElementById('author');
+let year    = document.getElementById('year');
+let pages   = document.getElementById('pages');
+let read    = document.getElementById('read');
 
-let addBook = document.getElementById('addBook');
-let cardForm = document.getElementById('cardForm');
+let addBook     = document.getElementById('addBook');
+let cardForm    = document.getElementById('cardForm');
 let mainContent = document.getElementById('mainContent');
-//add position fixed overlay to area behind form, make main content area first
+let submit      = document.getElementById('submit');
+
+document.getElementById('cardTitle').textContent = `Title: ${authorValue}`;
+document.getElementById('cardAuthor').textContent = `Author: ${titleValue}`;
+document.getElementById('cardYear').textContent = `Year: ${yearValue}`;
+document.getElementById('cardPages').textContent = `Pages: ${pagesValue}`;
+document.getElementById('cardRead').textContent = `Read: ${readValue}`;
+
+// Event listeners for books
 addBook.addEventListener('click', () => {
     document.getElementById('cardForm').style.display = "block";
     let overlay = document.createElement('section');
@@ -22,8 +25,19 @@ addBook.addEventListener('click', () => {
     document.body.appendChild(overlay);
     document.getElementById('overlay').classList.add('overlay');
     console.log('this works')
-})
+});
 
+submit.addEventListener('click', () => {
+    let authorValue = author.value;
+    let titleValue  = title.value;
+    let yearValue   = year.value;
+    let pagesValue  = pages.value;
+    let readValue   = read.value;
+    addBookToLibrary(authorValue, titleValue, yearValue, pagesValue, readValue);
+    console.log(myLibrary);
+});
+
+// Functions for books and form
 function Book (title, author, year, pages, read) {
     this.title  = title;
     this.author = author;
@@ -37,10 +51,6 @@ function addBookToLibrary (title, author, year, pages, read) {
     myLibrary.push(newBook);
 };
 
-addBookToLibrary ("LOTR", "Tolkein", 1950, 342, "No")
-addBookToLibrary ("Thus Spoke Zarathustra", "Nietzsche", 1940, 213, "Yes");
-addBookToLibrary ("Stranger", "Camus", 1939, 125, "Yes");
-
 function displayBook () {
     let displayText = '';
     for (const obj of myLibrary) {
@@ -49,6 +59,11 @@ function displayBook () {
     
 };
 
+addBookToLibrary
+
+// addBookToLibrary ("LOTR", "Tolkein", 1950, 342, "No")
+// addBookToLibrary ("Thus Spoke Zarathustra", "Nietzsche", 1940, 213, "Yes");
+// addBookToLibrary ("Stranger", "Camus", 1939, 125, "Yes");
 // displayBook();
 
 // console.log(myLibrary);
