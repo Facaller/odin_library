@@ -14,6 +14,11 @@
 
 -- Pseudocode for Step 4 --
 
-1 -     Write a function that loops through the Library array and displays a specific book.
-2 -     Create a form in HTML that can accept answers.
-3 -     Link the function and the form.
+1 -     Submit button should create a div with card class.
+2 -     Card should slot in horizontally.
+3 -     Cards contents should be what was just submitted on the form.
+4 -     Or should be added to array and function loops through array to add new item.
+
+-- Pseudocode for Step 5 --
+
+1 -     Write a function that loops through the Library array and displays the books that are not already on display.
