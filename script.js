@@ -13,8 +13,6 @@ let submit      = document.getElementById('submit');
 
 let overlay;
 
-
-
 // Event listeners for books
 addBook.addEventListener('click', () => {
     cardForm.style.display = "block";
