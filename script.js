@@ -13,6 +13,11 @@ let submit      = document.getElementById('submit');
 let form        = document.getElementById('form');
 
 let overlay;
+let titleValue;
+let authorValue;
+let yearValue;
+let pagesValue;
+let readValue;
 
 // Event listeners for books
 addBook.addEventListener('click', () => {
@@ -26,13 +31,14 @@ addBook.addEventListener('click', () => {
 
 submit.addEventListener('click', (event) => {
     event.preventDefault();
-    let titleValue  = title.value;
-    let authorValue = author.value;
-    let yearValue   = year.value;
-    let pagesValue  = pages.value;
-    let readValue   = read.value;
+    titleValue  = title.value;
+    authorValue = author.value;
+    yearValue   = year.value;
+    pagesValue  = pages.value;
+    readValue   = read.value;
 
     addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
+    displayNewBook();
 
     document.getElementById('cardTitle').textContent  = `Title: ${titleValue}`;
     document.getElementById('cardAuthor').textContent = `Author: ${authorValue}`;
@@ -63,43 +69,70 @@ function addBookToLibrary (title, author, year, pages, read) {
 };
 
 function displayNewBook () {
-    let displayText = '';
-    for (const obj of myLibrary) {
-        displayText += `Title: ${obj.title}, Author: ${obj.author}, Year: ${obj.year}, Pages: ${obj.pages}, Read: ${obj.read}\n`;
-    } 
+    myLibrary.forEach(book => {
+        let bookCard = document.createElement('div');
+        bookCard.classList.add('card');
+
+        let bookTitle = document.createElement('h2');
+        bookTitle.textContent = titleValue;
+        bookCard.appendChild(bookTitle);
+
+        let bookAuthor = document.createElement('p');
+        bookAuthor.textContent = authorValue;
+        bookCard.appendChild(bookAuthor);
+
+        let bookYear = document.createElement('p');
+        bookYear.textContent = yearValue;
+        bookCard.appendChild(bookYear);
+
+        let bookPages = document.createElement('p');
+        bookPages.textContent = pagesValue;
+        bookCard.appendChild(bookPages);
+
+        let bookRead = document.createElement('p');
+        bookRead.textContent = readValue;
+        bookCard.appendChild(bookRead);
+
+            mainContent.appendChild(bookCard);
+    })
 };
 
 //GPT suggestion
 
-// function displayBooks() {
-//     const container = document.getElementById('bookContainer');
-//     container.innerHTML = ''; // Clear the container before displaying new content
+// function addBookToLibrary(title, author, year, pages, read) {
+//     // Create a new Book object
+//     let newBook = new Book(title, author, year, pages, read);
+//     myLibrary.push(newBook);
 
-//     books.forEach(book => {
-//         // Create a card for each book
-//         const card = document.createElement('div');
-//         card.classList.add('book-card');
-//         card.innerHTML = `
-//             <h3>${book.title}</h3>
-//             <p><strong>Author:</strong> ${book.author}</p>
-//             <p><strong>Year:</strong> ${book.year}</p>
-//         `;
+//     // Create and display the new book card immediately
+//     let bookCard = document.createElement('div');
+//     bookCard.classList.add('card');
 
-//         // Append the card to the container
-//         container.appendChild(card);
-//     });
+//     let bookTitle = document.createElement('h2');
+//     bookTitle.textContent = newBook.title;
+//     bookCard.appendChild(bookTitle);
+
+//     let bookAuthor = document.createElement('p');
+//     bookAuthor.textContent = `Author: ${newBook.author}`;
+//     bookCard.appendChild(bookAuthor);
+
+//     let bookYear = document.createElement('p');
+//     bookYear.textContent = `Year: ${newBook.year}`;
+//     bookCard.appendChild(bookYear);
+
+//     let bookPages = document.createElement('p');
+//     bookPages.textContent = `Pages: ${newBook.pages}`;
+//     bookCard.appendChild(bookPages);
+
+//     let bookRead = document.createElement('p');
+//     bookRead.textContent = `Read: ${newBook.read}`;
+//     bookCard.appendChild(bookRead);
+
+//     // Append the new book card to the main content
+//     const mainContent = document.getElementById('mainContent');
+//     mainContent.appendChild(bookCard);
 // }
 
-// // Call the function to display books when the page loads
-// document.addEventListener('DOMContentLoaded', displayBooks);
-
-// function addBook(title, author, year) {
-//     books.push({ title, author, year });
-//     displayBooks(); // Update the display with the new book
-// }
-
-// // Example of adding a new book
-// addBook("Book Four", "Author D", 2023);
 
 
 
