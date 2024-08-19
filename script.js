@@ -1,4 +1,5 @@
 const myLibrary = [];
+const displayedBooks = new Set();
 
 let title  = document.getElementById('title');
 let author = document.getElementById('author');
@@ -38,7 +39,6 @@ submit.addEventListener('click', (event) => {
     readValue   = read.value;
 
     addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
-    displayNewBook();
 
     document.getElementById('cardTitle').textContent  = `Title: ${titleValue}`;
     document.getElementById('cardAuthor').textContent = `Author: ${authorValue}`;
@@ -66,72 +66,122 @@ function Book (title, author, year, pages, read) {
 function addBookToLibrary (title, author, year, pages, read) {
     let newBook = new Book(title, author, year, pages, read);
     myLibrary.push(newBook);
+    displayNewBook(newBook);
+};
+
+function createBookID (book) {
+    return `${book.title}-${book.author}-${book.year}-${book.pages}`;
 };
 
 function displayNewBook () {
     myLibrary.forEach(book => {
-        let bookCard = document.createElement('div');
-        bookCard.classList.add('card');
+        const bookID = createBookID(book);
 
-        let bookTitle = document.createElement('h2');
-        bookTitle.textContent = titleValue;
-        bookCard.appendChild(bookTitle);
+        if (!displayedBooks.has(createBookID)); {
+        
+            let bookCard = document.createElement('div');
+            bookCard.classList.add('card');
 
-        let bookAuthor = document.createElement('p');
-        bookAuthor.textContent = authorValue;
-        bookCard.appendChild(bookAuthor);
+            let bookTitle = document.createElement('h2');
+            bookTitle.textContent = book.title;
+            bookCard.appendChild(bookTitle);
 
-        let bookYear = document.createElement('p');
-        bookYear.textContent = yearValue;
-        bookCard.appendChild(bookYear);
+            let bookAuthor = document.createElement('p');
+            bookAuthor.textContent = book.author;
+            bookCard.appendChild(bookAuthor);
 
-        let bookPages = document.createElement('p');
-        bookPages.textContent = pagesValue;
-        bookCard.appendChild(bookPages);
+            let bookYear = document.createElement('p');
+            bookYear.textContent = book.year;
+            bookCard.appendChild(bookYear);
 
-        let bookRead = document.createElement('p');
-        bookRead.textContent = readValue;
-        bookCard.appendChild(bookRead);
+            let bookPages = document.createElement('p');
+            bookPages.textContent = book.pages;
+            bookCard.appendChild(bookPages);
+
+            let bookRead = document.createElement('p');
+            bookRead.textContent = book.read;
+            bookCard.appendChild(bookRead);
 
             mainContent.appendChild(bookCard);
+        }
     })
 };
 
 //GPT suggestion
 
+// // Assuming you have this array somewhere in your code
+// const myLibrary = []; 
+
+// // A Set to keep track of displayed book identifiers
+// const displayedBooks = new Set();
+
+// function Book(title, author, year, pages, read) {
+//     this.title = title;
+//     this.author = author;
+//     this.year = year;
+//     this.pages = pages;
+//     this.read = read;
+// }
+
 // function addBookToLibrary(title, author, year, pages, read) {
-//     // Create a new Book object
 //     let newBook = new Book(title, author, year, pages, read);
 //     myLibrary.push(newBook);
-
-//     // Create and display the new book card immediately
-//     let bookCard = document.createElement('div');
-//     bookCard.classList.add('card');
-
-//     let bookTitle = document.createElement('h2');
-//     bookTitle.textContent = newBook.title;
-//     bookCard.appendChild(bookTitle);
-
-//     let bookAuthor = document.createElement('p');
-//     bookAuthor.textContent = `Author: ${newBook.author}`;
-//     bookCard.appendChild(bookAuthor);
-
-//     let bookYear = document.createElement('p');
-//     bookYear.textContent = `Year: ${newBook.year}`;
-//     bookCard.appendChild(bookYear);
-
-//     let bookPages = document.createElement('p');
-//     bookPages.textContent = `Pages: ${newBook.pages}`;
-//     bookCard.appendChild(bookPages);
-
-//     let bookRead = document.createElement('p');
-//     bookRead.textContent = `Read: ${newBook.read}`;
-//     bookCard.appendChild(bookRead);
-
-//     // Append the new book card to the main content
-//     const mainContent = document.getElementById('mainContent');
-//     mainContent.appendChild(bookCard);
+//     displayNewBooks(); // Display only new or updated books
 // }
+
+// function generateBookIdentifier(book) {
+//     // Generate a unique identifier for each book
+//     return `${book.title}-${book.author}-${book.year}`;
+// }
+
+// function displayNewBooks() {
+//     // Get the main content container
+//     const mainContent = document.getElementById('main-content');
+    
+//     // Iterate over each book in the library
+//     myLibrary.forEach(book => {
+//         const bookIdentifier = generateBookIdentifier(book);
+        
+//         // Check if the book is already displayed
+//         if (!displayedBooks.has(bookIdentifier)) {
+//             // Create and append new book card
+//             let bookCard = document.createElement('div');
+//             bookCard.classList.add('card');
+
+//             // Title
+//             let bookTitle = document.createElement('h2');
+//             bookTitle.textContent = book.title;
+//             bookCard.appendChild(bookTitle);
+
+//             // Author
+//             let bookAuthor = document.createElement('p');
+//             bookAuthor.textContent = book.author;
+//             bookCard.appendChild(bookAuthor);
+
+//             // Year
+//             let bookYear = document.createElement('p');
+//             bookYear.textContent = book.year;
+//             bookCard.appendChild(bookYear);
+
+//             // Pages
+//             let bookPages = document.createElement('p');
+//             bookPages.textContent = book.pages;
+//             bookCard.appendChild(bookPages);
+
+//             // Read status
+//             let bookRead = document.createElement('p');
+//             bookRead.textContent = book.read ? 'Read' : 'Not Read';
+//             bookCard.appendChild(bookRead);
+
+//             // Append the book card to the main content
+//             mainContent.appendChild(bookCard);
+            
+//             // Add the book identifier to the set of displayed books
+//             displayedBooks.add(bookIdentifier);
+//         }
+//     });
+// }
+
 
 
 
