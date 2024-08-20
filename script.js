@@ -39,12 +39,6 @@ submit.addEventListener('click', (event) => {
     readValue   = read.value;
 
     addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
-
-    document.getElementById('cardTitle').textContent  = `Title: ${titleValue}`;
-    document.getElementById('cardAuthor').textContent = `Author: ${authorValue}`;
-    document.getElementById('cardYear').textContent   = `Year: ${yearValue}`;
-    document.getElementById('cardPages').textContent  = `Pages: ${pagesValue}`;
-    document.getElementById('cardRead').textContent   = `Read: ${readValue}`;
     
     cardForm.style.display = "none";
     if (overlay) {
@@ -77,7 +71,7 @@ function displayNewBook () {
     myLibrary.forEach(book => {
         const bookID = createBookID(book);
 
-        if (!displayedBooks.has(createBookID)); {
+        if (!displayedBooks.has(bookID)) {
         
             let bookCard = document.createElement('div');
             bookCard.classList.add('card');
@@ -103,88 +97,18 @@ function displayNewBook () {
             bookCard.appendChild(bookRead);
 
             mainContent.appendChild(bookCard);
+            displayedBooks.add(bookID);
         }
     })
 };
 
 //GPT suggestion
 
-// // Assuming you have this array somewhere in your code
-// const myLibrary = []; 
-
-// // A Set to keep track of displayed book identifiers
-// const displayedBooks = new Set();
-
-// function Book(title, author, year, pages, read) {
-//     this.title = title;
-//     this.author = author;
-//     this.year = year;
-//     this.pages = pages;
-//     this.read = read;
-// }
-
-// function addBookToLibrary(title, author, year, pages, read) {
-//     let newBook = new Book(title, author, year, pages, read);
-//     myLibrary.push(newBook);
-//     displayNewBooks(); // Display only new or updated books
-// }
-
-// function generateBookIdentifier(book) {
-//     // Generate a unique identifier for each book
-//     return `${book.title}-${book.author}-${book.year}`;
-// }
-
-// function displayNewBooks() {
-//     // Get the main content container
-//     const mainContent = document.getElementById('main-content');
-    
-//     // Iterate over each book in the library
-//     myLibrary.forEach(book => {
-//         const bookIdentifier = generateBookIdentifier(book);
-        
-//         // Check if the book is already displayed
-//         if (!displayedBooks.has(bookIdentifier)) {
-//             // Create and append new book card
-//             let bookCard = document.createElement('div');
-//             bookCard.classList.add('card');
-
-//             // Title
-//             let bookTitle = document.createElement('h2');
-//             bookTitle.textContent = book.title;
-//             bookCard.appendChild(bookTitle);
-
-//             // Author
-//             let bookAuthor = document.createElement('p');
-//             bookAuthor.textContent = book.author;
-//             bookCard.appendChild(bookAuthor);
-
-//             // Year
-//             let bookYear = document.createElement('p');
-//             bookYear.textContent = book.year;
-//             bookCard.appendChild(bookYear);
-
-//             // Pages
-//             let bookPages = document.createElement('p');
-//             bookPages.textContent = book.pages;
-//             bookCard.appendChild(bookPages);
-
-//             // Read status
-//             let bookRead = document.createElement('p');
-//             bookRead.textContent = book.read ? 'Read' : 'Not Read';
-//             bookCard.appendChild(bookRead);
-
-//             // Append the book card to the main content
-//             mainContent.appendChild(bookCard);
-            
-//             // Add the book identifier to the set of displayed books
-//             displayedBooks.add(bookIdentifier);
-//         }
-//     });
-// }
-
-
-
-
+// document.getElementById('cardTitle').textContent  = `Title: ${titleValue}`;
+// document.getElementById('cardAuthor').textContent = `Author: ${authorValue}`;
+// document.getElementById('cardYear').textContent   = `Year: ${yearValue}`;
+// document.getElementById('cardPages').textContent  = `Pages: ${pagesValue}`;
+// document.getElementById('cardRead').textContent   = `Read: ${readValue}`;
 
 // addBookToLibrary ("LOTR", "Tolkein", 1950, 342, "No")
 // addBookToLibrary ("Thus Spoke Zarathustra", "Nietzsche", 1940, 213, "Yes");

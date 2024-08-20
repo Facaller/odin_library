@@ -5,6 +5,10 @@
 3 -     After button click, bring forward the form on a card.
 4 -     The form details are put to a new empty card. New card has a spot on page.
 5 -     The process should be repeatable, with new cards being added to the page.
+6 -     Each card can be edited.
+7 -     The reading status can be toggled.
+8 -     The book (card) can beremoved.
+9 -     A tab at the bottom of the screen shows the collected stats of the books.
 
 -- Pseudocode for Step 3 --
 
