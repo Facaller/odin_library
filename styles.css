@@ -47,35 +47,36 @@ p, form, input, button {
     font-family: 'andbasr';
 }
 
-.overlay {
-    position: fixed;
+.main-content {
+    display: grid;
+    grid-auto-flow: column;
+    background-color: rgb(255 255 255 / 30%);
+    z-index: 1;
+    padding: 20px;
+}
+
+.main-content, .overlay {
+    width: 95vw;
+    height: 95vh;
+}
+
+.overlay, .card-form, .card-buttons {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 95vw;
-    height: 95vh;
+}
+
+.overlay {
+    position: fixed;
     background-color: rgba(0,0,0,0.5);
     z-index: 2;
     filter: blur(3px);
     /* transition: opacity 2s ease, background-color 2s ease, filter 2s ease; fix this */
 }
 
-.main-content {
-    display: grid;
-    grid-auto-flow: column;
-    background-color: rgb(255 255 255 / 30%);
-    width: 95vw;
-    height: 95vh;
-    z-index: 1;
-    padding: 20px;
-}
-
 .card-form {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     z-index: 3;
     max-width: 300px;
     padding: 20px;
@@ -85,6 +86,7 @@ p, form, input, button {
 }
 
 .card {
+    position: relative;
     display: grid;
     padding: 1rem;
     height: 230px;
@@ -93,4 +95,14 @@ p, form, input, button {
     box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.1);
     color: #666666;
     background-color: #FFFFFF;
+}
+
+.card:hover .card-buttons {
+    filter: blur(2px);
+}
+
+.card-buttons {
+    display: none;
+    position: absolute;
+    
 }

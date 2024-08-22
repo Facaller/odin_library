@@ -48,6 +48,8 @@ submit.addEventListener('click', (event) => {
     form.reset();
 });
 
+
+
 // Functions for books and form
 function Book (title, author, year, pages, read) {
     this.title  = title;
@@ -66,7 +68,7 @@ function addBookToLibrary (title, author, year, pages, read) {
 function createBookID (book) {
     return `${book.title}-${book.author}-${book.year}-${book.pages}`;
 };
-
+// add event listener for mouse over, but generally works
 function displayNewBook () {
     myLibrary.forEach(book => {
         const bookID = createBookID(book);
@@ -95,6 +97,22 @@ function displayNewBook () {
             let bookRead = document.createElement('p');
             bookRead.textContent = book.read;
             bookCard.appendChild(bookRead);
+
+            let bookButtons = document.createElement('div');
+            bookButtons.classList.add('card-buttons');
+            bookCard.appendChild(bookButtons);
+
+            let bookBtn1 = document.createElement('button');
+            bookBtn1.textContent = 'Read';
+            bookButtons.appendChild(bookBtn1);
+
+            let bookBtn2 = document.createElement('button');
+            bookBtn2.textContent = 'Edit';
+            bookButtons.appendChild(bookBtn2);
+
+            let bookBtn3 = document.createElement('button');
+            bookBtn3.textContent = 'Remove';
+            bookButtons.appendChild(bookBtn3);
 
             mainContent.appendChild(bookCard);
             displayedBooks.add(bookID);
