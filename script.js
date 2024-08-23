@@ -22,7 +22,7 @@ let readValue;
 
 // Event listeners for books
 addBook.addEventListener('click', () => {
-    cardForm.style.display = "block";
+    cardForm.style.display = 'block';
     overlay = document.createElement('section');
     overlay.id = 'overlay';
     document.body.appendChild(overlay);
@@ -68,7 +68,7 @@ function addBookToLibrary (title, author, year, pages, read) {
 function createBookID (book) {
     return `${book.title}-${book.author}-${book.year}-${book.pages}`;
 };
-// add event listener for mouse over, but generally works
+
 function displayNewBook () {
     myLibrary.forEach(book => {
         const bookID = createBookID(book);
@@ -98,21 +98,21 @@ function displayNewBook () {
             bookRead.textContent = book.read;
             bookCard.appendChild(bookRead);
 
-            let bookButtons = document.createElement('div');
-            bookButtons.classList.add('card-buttons');
-            bookCard.appendChild(bookButtons);
+            let buttonsContainer = document.createElement('div');
+            buttonsContainer.classList.add('card-buttons');
+            bookCard.appendChild(buttonsContainer);
 
             let bookBtn1 = document.createElement('button');
             bookBtn1.textContent = 'Read';
-            bookButtons.appendChild(bookBtn1);
+            buttonsContainer.appendChild(bookBtn1);
 
             let bookBtn2 = document.createElement('button');
             bookBtn2.textContent = 'Edit';
-            bookButtons.appendChild(bookBtn2);
+            buttonsContainer.appendChild(bookBtn2);
 
             let bookBtn3 = document.createElement('button');
             bookBtn3.textContent = 'Remove';
-            bookButtons.appendChild(bookBtn3);
+            buttonsContainer.appendChild(bookBtn3);
 
             mainContent.appendChild(bookCard);
             displayedBooks.add(bookID);
