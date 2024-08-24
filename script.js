@@ -48,8 +48,6 @@ submit.addEventListener('click', (event) => {
     form.reset();
 });
 
-
-
 // Functions for books and form
 function Book (title, author, year, pages, read) {
     this.title  = title;
@@ -117,9 +115,19 @@ function displayNewBook () {
             let bookBtn3 = document.createElement('button');
             bookBtn3.textContent = 'Remove';
             buttonsContainer.appendChild(bookBtn3);
+            removeBook(bookBtn3, bookCard, bookID);
 
             mainContent.appendChild(bookCard);
             displayedBooks.add(bookID);
+        }
+    })
+};
+
+function removeBook (remove, element, currentBook) {
+    remove.addEventListener('click', () => {
+        element.parentNode.removeChild(element)
+        if (displayedBooks.has(currentBook)) {
+            displayedBooks.delete(currentBook)
         }
     })
 };
