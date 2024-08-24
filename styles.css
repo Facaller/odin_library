@@ -97,7 +97,11 @@ p, form, input, button {
     background-color: #FFFFFF;
 }
 
-.card:hover {
+.card-content {
+    display: grid;
+}
+
+.card-content:hover {
     filter: blur(2px);
 }
 

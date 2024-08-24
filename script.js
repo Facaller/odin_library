@@ -78,25 +78,29 @@ function displayNewBook () {
             let bookCard = document.createElement('div');
             bookCard.classList.add('card');
 
+            let cardContent = document.createElement('div');
+            cardContent.classList.add('card-content');
+            bookCard.appendChild(cardContent);
+
             let bookTitle = document.createElement('h2');
             bookTitle.textContent = book.title;
-            bookCard.appendChild(bookTitle);
+            cardContent.appendChild(bookTitle);
 
             let bookAuthor = document.createElement('p');
             bookAuthor.textContent = book.author;
-            bookCard.appendChild(bookAuthor);
+            cardContent.appendChild(bookAuthor);
 
             let bookYear = document.createElement('p');
             bookYear.textContent = book.year;
-            bookCard.appendChild(bookYear);
+            cardContent.appendChild(bookYear);
 
             let bookPages = document.createElement('p');
             bookPages.textContent = book.pages;
-            bookCard.appendChild(bookPages);
+            cardContent.appendChild(bookPages);
 
             let bookRead = document.createElement('p');
             bookRead.textContent = book.read;
-            bookCard.appendChild(bookRead);
+            cardContent.appendChild(bookRead);
 
             let buttonsContainer = document.createElement('div');
             buttonsContainer.classList.add('card-buttons');
