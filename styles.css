@@ -113,3 +113,7 @@ p, form, input, button {
     display: none;
     position: absolute;
 }
+
+.active {
+    background-color: red;
+}

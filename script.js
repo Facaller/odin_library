@@ -107,6 +107,7 @@ function displayNewBook () {
             let bookBtn1 = document.createElement('button');
             bookBtn1.textContent = 'Read';
             buttonsContainer.appendChild(bookBtn1);
+            toggleRead(bookBtn1)
 
             let bookBtn2 = document.createElement('button');
             bookBtn2.textContent = 'Edit';
@@ -132,17 +133,71 @@ function removeBook (remove, element, currentBook) {
     })
 };
 
+function toggleRead (isRead) {
+    isRead.addEventListener('click', () => {
+        isRead.classList.toggle('active');
+    })
+};
+
+function editBook (bookToEdit, newBookData) {
+    for (const book of displayedBooks) {
+        if (book.id === bookToEdit.id) {
+            Object.assign(book, newBookData)
+            break;
+        }
+    }
+};
+
 //GPT suggestion
 
-// document.getElementById('cardTitle').textContent  = `Title: ${titleValue}`;
-// document.getElementById('cardAuthor').textContent = `Author: ${authorValue}`;
-// document.getElementById('cardYear').textContent   = `Year: ${yearValue}`;
-// document.getElementById('cardPages').textContent  = `Pages: ${pagesValue}`;
-// document.getElementById('cardRead').textContent   = `Read: ${readValue}`;
+// // Initialize the Set with some book objects
+// let books = new Set([
+//     { title: 'Book Title 1', author: 'Author 1' },
+//     { title: 'Book Title 2', author: 'Author 2' }
+// ]);
+
+// // Function to handle editing a book
+// function editBook(oldTitle, oldAuthor, newBookData) {
+//     for (const book of books) {
+//         if (book.title === oldTitle && book.author === oldAuthor) {
+//             // Update the properties of the book object
+//             Object.assign(book, newBookData);
+//             break;
+//         }
+//     }
+// }
+
+// // Example usage
+// editBook('Book Title 1', 'Author 1', { title: 'Updated Title', author: 'Updated Author' });
+
+// // Log the Set to see the changes
+// console.log(books);
+
+// Initialize the Set with some book objects
+// let books = new Set([
+//     { id: 1, title: 'Book Title 1', author: 'Author 1' },
+//     { id: 2, title: 'Book Title 2', author: 'Author 2' }
+// ]);
+
+// // Function to handle editing a book
+// function editBook(bookId, newBookData) {
+//     for (const book of books) {
+//         if (book.id === bookId) {
+//             // Update the properties of the book object
+//             Object.assign(book, newBookData);
+//             break;
+//         }
+//     }
+// }
+
+// // Example usage
+// editBook(1, { title: 'Updated Title', author: 'Updated Author' });
+
+// // Log the Set to see the changes
+// console.log(books);
+
 
 // addBookToLibrary ("LOTR", "Tolkein", 1950, 342, "No")
 // addBookToLibrary ("Thus Spoke Zarathustra", "Nietzsche", 1940, 213, "Yes");
 // addBookToLibrary ("Stranger", "Camus", 1939, 125, "Yes");
 // displayBook();
-
-// console.log(myLibrary);

@@ -7,7 +7,7 @@
 5 -     The process should be repeatable, with new cards being added to the page.
 6 -     Each card can be edited.
 7 -     The reading status can be toggled.
-8 -     The book (card) can beremoved.
+8 -     The book (card) can be removed.
 9 -     A tab at the bottom of the screen shows the collected stats of the books.
 
 -- Pseudocode for Step 3 --
@@ -23,6 +23,8 @@
 3 -     Cards contents should be what was just submitted on the form.
 4 -     Or should be added to array and function loops through array to add new item.
 
--- Pseudocode for Step 5 --
+-- Pseudocode for Step 6 --
 
-1 -     Write a function that loops through the Library array and displays the books that are not already on display.
+1 -     Create a function that can edit an object in set.
+2 -     Set old data to new data using the function.
+3 -     Set item should be the same with updated details.
