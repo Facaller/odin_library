@@ -112,6 +112,14 @@ function displayNewBook () {
             let bookBtn2 = document.createElement('button');
             bookBtn2.textContent = 'Edit';
             buttonsContainer.appendChild(bookBtn2);
+            editBook(bookBtn2, book.title, book.author, book.year, book.pages,
+                {
+                    title:  book.title,
+                    author: book.author,
+                    year:   book.year,
+                    year:   book.pages
+                }
+            )
 
             let bookBtn3 = document.createElement('button');
             bookBtn3.textContent = 'Remove';
@@ -139,13 +147,23 @@ function toggleRead (isRead) {
     })
 };
 
-function editBook (bookToEdit, newBookData) {
-    for (const book of displayedBooks) {
-        if (book.id === bookToEdit.id) {
-            Object.assign(book, newBookData)
-            break;
+function editBook (edit, oldTitle, oldAuthor, oldYear, oldPages, newBookData) {
+    edit.addEventListener('click', () => {
+        cardForm.style.display = 'block';
+        overlay = document.createElement('section');
+        overlay.id = 'overlay';
+        document.body.appendChild(overlay);
+        overlay.classList.add('overlay');
+        for (const edits of myLibrary) {
+            if (edits.title === oldTitle
+                && edits.author === oldAuthor
+                && edits.year === oldYear
+                && edits.pages === oldPages) {
+                Object.assign(edits, newBookData)
+                break;
+            }
         }
-    }
+    })
 };
 
 //GPT suggestion
