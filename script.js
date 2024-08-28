@@ -22,11 +22,7 @@ let readValue;
 
 // Event listeners for books
 addBook.addEventListener('click', () => {
-    cardForm.style.display = 'block';
-    overlay = document.createElement('section');
-    overlay.id = 'overlay';
-    document.body.appendChild(overlay);
-    overlay.classList.add('overlay');
+    createForm()
     console.log('this works')
 });
 
@@ -48,6 +44,21 @@ submit.addEventListener('click', (event) => {
     form.reset();
 });
 
+mainContent.addEventListener('click', (event) => {
+    let editForm = event.target.closest('card');
+    if (editForm) {
+        const oldTitle = card.getAttribute('data-title');
+        const oldAuthor = card.getAttribute('data-author');
+        const oldYear = card.getAttribute('data-year');
+        const oldPages = card.getAttribute('data-pages');
+
+        title.value  = oldTitle;
+        author.value = oldAuthor;
+        year.value   = oldYear;
+        pages.value  = oldPages;
+    }
+});
+
 // Functions for books and form
 function Book (title, author, year, pages, read) {
     this.title  = title;
@@ -61,6 +72,14 @@ function addBookToLibrary (title, author, year, pages, read) {
     let newBook = new Book(title, author, year, pages, read);
     myLibrary.push(newBook);
     displayNewBook(newBook);
+};
+
+function createForm () {
+    cardForm.style.display = 'block';
+    overlay = document.createElement('section');
+    overlay.id = 'overlay';
+    document.body.appendChild(overlay);
+    overlay.classList.add('overlay');
 };
 
 function createBookID (book) {
@@ -112,14 +131,7 @@ function displayNewBook () {
             let bookBtn2 = document.createElement('button');
             bookBtn2.textContent = 'Edit';
             buttonsContainer.appendChild(bookBtn2);
-            editBook(bookBtn2, book.title, book.author, book.year, book.pages,
-                {
-                    title:  book.title,
-                    author: book.author,
-                    year:   book.year,
-                    year:   book.pages
-                }
-            )
+            editBook(bookBtn2, book);
 
             let bookBtn3 = document.createElement('button');
             bookBtn3.textContent = 'Remove';
@@ -147,73 +159,19 @@ function toggleRead (isRead) {
     })
 };
 
-function editBook (edit, oldTitle, oldAuthor, oldYear, oldPages, newBookData) {
+function editBook (edit, book) {
     edit.addEventListener('click', () => {
-        cardForm.style.display = 'block';
-        overlay = document.createElement('section');
-        overlay.id = 'overlay';
-        document.body.appendChild(overlay);
-        overlay.classList.add('overlay');
-        for (const edits of myLibrary) {
-            if (edits.title === oldTitle
-                && edits.author === oldAuthor
-                && edits.year === oldYear
-                && edits.pages === oldPages) {
-                Object.assign(edits, newBookData)
-                break;
-            }
-        }
-    })
+        createForm(book)
+        book.title  = titleValue;
+        book.author = authorValue;
+        book.year   = yearValue;
+        book.pages  = pagesValue;
+
+        displayNewBook();
+    });
 };
 
 //GPT suggestion
-
-// // Initialize the Set with some book objects
-// let books = new Set([
-//     { title: 'Book Title 1', author: 'Author 1' },
-//     { title: 'Book Title 2', author: 'Author 2' }
-// ]);
-
-// // Function to handle editing a book
-// function editBook(oldTitle, oldAuthor, newBookData) {
-//     for (const book of books) {
-//         if (book.title === oldTitle && book.author === oldAuthor) {
-//             // Update the properties of the book object
-//             Object.assign(book, newBookData);
-//             break;
-//         }
-//     }
-// }
-
-// // Example usage
-// editBook('Book Title 1', 'Author 1', { title: 'Updated Title', author: 'Updated Author' });
-
-// // Log the Set to see the changes
-// console.log(books);
-
-// Initialize the Set with some book objects
-// let books = new Set([
-//     { id: 1, title: 'Book Title 1', author: 'Author 1' },
-//     { id: 2, title: 'Book Title 2', author: 'Author 2' }
-// ]);
-
-// // Function to handle editing a book
-// function editBook(bookId, newBookData) {
-//     for (const book of books) {
-//         if (book.id === bookId) {
-//             // Update the properties of the book object
-//             Object.assign(book, newBookData);
-//             break;
-//         }
-//     }
-// }
-
-// // Example usage
-// editBook(1, { title: 'Updated Title', author: 'Updated Author' });
-
-// // Log the Set to see the changes
-// console.log(books);
-
 
 // addBookToLibrary ("LOTR", "Tolkein", 1950, 342, "No")
 // addBookToLibrary ("Thus Spoke Zarathustra", "Nietzsche", 1940, 213, "Yes");

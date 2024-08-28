@@ -26,5 +26,8 @@
 -- Pseudocode for Step 6 --
 
 1 -     Create a function that can edit an object in set.
-2 -     Set old data to new data using the function.
-3 -     Set item should be the same with updated details.
+2 -     Edit button brings up the form again.
+3 -     Form inputs should be current card data.
+4 -     New form inputs should edit current card on screen and in array.
+5 -     Set old data to new data using the function.
+6 -     Set item should be the same with updated details.
