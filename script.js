@@ -34,7 +34,20 @@ submit.addEventListener('click', (event) => {
     pagesValue  = pages.value;
     readValue   = read.value;
 
-    addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
+    const editId = form.getAttribute('data-edit-id');
+
+    if (editId) {
+        const bookToUpdate = myLibrary.find(book => createBookID(book) === editId);
+        if (bookToUpdate) {
+            bookToUpdate.title  = titleValue;
+            bookToUpdate.author = authorValue;
+            bookToUpdate.year   = yearValue;
+            bookToUpdate.pages  = pagesValue;
+            bookToUpdate.read   = readValue;
+        }
+    } else {
+        addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
+    }
     
     cardForm.style.display = "none";
     if (overlay) {
@@ -42,6 +55,7 @@ submit.addEventListener('click', (event) => {
     }
 
     form.reset();
+    form.removeAttribute('data-edit-id');
 });
 
 mainContent.addEventListener('click', (event) => {
@@ -161,13 +175,14 @@ function toggleRead (isRead) {
 
 function editBook (edit, book) {
     edit.addEventListener('click', () => {
-        createForm(book)
-        book.title  = titleValue;
-        book.author = authorValue;
-        book.year   = yearValue;
-        book.pages  = pagesValue;
+        title.value = book.title;
+        author.value = book.author;
+        year.value = book.year;
+        pages.value = book.pages;
 
-        displayNewBook();
+        createForm();
+
+        form.setAttribute('data-edit-id', createBookID(book));
     });
 };
 
