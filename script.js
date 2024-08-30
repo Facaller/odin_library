@@ -44,6 +44,8 @@ submit.addEventListener('click', (event) => {
             bookToUpdate.year   = yearValue;
             bookToUpdate.pages  = pagesValue;
             bookToUpdate.read   = readValue;
+
+            updateBookDisplay(bookToUpdate);
         }
     } else {
         addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
@@ -58,21 +60,6 @@ submit.addEventListener('click', (event) => {
     form.removeAttribute('data-edit-id');
 });
 
-mainContent.addEventListener('click', (event) => {
-    let editForm = event.target.closest('card');
-    if (editForm) {
-        const oldTitle = card.getAttribute('data-title');
-        const oldAuthor = card.getAttribute('data-author');
-        const oldYear = card.getAttribute('data-year');
-        const oldPages = card.getAttribute('data-pages');
-
-        title.value  = oldTitle;
-        author.value = oldAuthor;
-        year.value   = oldYear;
-        pages.value  = oldPages;
-    }
-});
-
 // Functions for books and form
 function Book (title, author, year, pages, read) {
     this.title  = title;
@@ -85,7 +72,7 @@ function Book (title, author, year, pages, read) {
 function addBookToLibrary (title, author, year, pages, read) {
     let newBook = new Book(title, author, year, pages, read);
     myLibrary.push(newBook);
-    displayNewBook(newBook);
+    displayBook(newBook);
 };
 
 function createForm () {
@@ -100,12 +87,10 @@ function createBookID (book) {
     return `${book.title}-${book.author}-${book.year}-${book.pages}`;
 };
 
-function displayNewBook () {
-    myLibrary.forEach(book => {
+function displayBook (book) {
         const bookID = createBookID(book);
 
         if (!displayedBooks.has(bookID)) {
-        
             let bookCard = document.createElement('div');
             bookCard.classList.add('card');
 
@@ -155,8 +140,22 @@ function displayNewBook () {
             mainContent.appendChild(bookCard);
             displayedBooks.add(bookID);
         }
-    })
 };
+
+function updateBookDisplay (book) {
+    const bookID = createBookID(book);
+    const existingBookCard = mainContent.querySelector(`.card[data-id='${bookID}']`)
+
+    if (existingBookCard) {
+        const cardContent = existingBookCard.querySelector('.card-content');
+
+        cardContent.querySelector('h2').textContent  = book.title
+        cardContent.querySelector('p').textContent   = book.author
+        cardContent.querySelector('p').textContent   = book.year
+        cardContent.querySelector('p').textContent   = book.pages
+        cardContent.querySelector('p').textContent   = book.read
+    }
+}
 
 function removeBook (remove, element, currentBook) {
     remove.addEventListener('click', () => {
@@ -187,6 +186,21 @@ function editBook (edit, book) {
 };
 
 //GPT suggestion
+
+// mainContent.addEventListener('click', (event) => {
+//     let editForm = event.target.closest('card');
+//     if (editForm) {
+//         const oldTitle = card.getAttribute('data-title');
+//         const oldAuthor = card.getAttribute('data-author');
+//         const oldYear = card.getAttribute('data-year');
+//         const oldPages = card.getAttribute('data-pages');
+
+//         title.value  = oldTitle;
+//         author.value = oldAuthor;
+//         year.value   = oldYear;
+//         pages.value  = oldPages;
+//     }
+// });
 
 // addBookToLibrary ("LOTR", "Tolkein", 1950, 342, "No")
 // addBookToLibrary ("Thus Spoke Zarathustra", "Nietzsche", 1940, 213, "Yes");
