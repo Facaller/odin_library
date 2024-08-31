@@ -12,6 +12,7 @@ let cardForm    = document.getElementById('cardForm');
 let mainContent = document.getElementById('mainContent');
 let submit      = document.getElementById('submit');
 let form        = document.getElementById('form');
+let closeForm   = document.getElementById('closeForm');
 
 let overlay;
 let titleValue;
@@ -22,8 +23,7 @@ let readValue;
 
 // Event listeners for books
 addBook.addEventListener('click', () => {
-    createForm()
-    console.log('this works')
+    renderForm()
 });
 
 submit.addEventListener('click', (event) => {
@@ -60,6 +60,15 @@ submit.addEventListener('click', (event) => {
     form.removeAttribute('data-edit-id');
 });
 
+closeForm.addEventListener('click', () => {
+    removeForm()
+    title  = '';
+    author = '';
+    year   = '';
+    pages  = '';
+    read   = '';
+});
+
 // Functions for books and form
 function Book (title, author, year, pages, read) {
     this.title  = title;
@@ -75,13 +84,18 @@ function addBookToLibrary (title, author, year, pages, read) {
     displayBook(newBook);
 };
 
-function createForm () {
+function renderForm () {
     cardForm.style.display = 'block';
     overlay = document.createElement('section');
     overlay.id = 'overlay';
     document.body.appendChild(overlay);
     overlay.classList.add('overlay');
 };
+
+function removeForm () {
+    cardForm.style.display = 'none'
+    document.body.removeChild(overlay);
+}
 
 function createBookID (book) {
     return `${book.title}-${book.author}-${book.year}-${book.pages}`;
@@ -160,8 +174,11 @@ function updateBookDisplay (book) {
 function removeBook (remove, element, currentBook) {
     remove.addEventListener('click', () => {
         element.parentNode.removeChild(element)
+
+        const bookToRemove = myLibrary.findIndex(book => book.bookID === currentBook);
         if (displayedBooks.has(currentBook)) {
             displayedBooks.delete(currentBook)
+            myLibrary.splice(bookToRemove, 1);
         }
     })
 };
@@ -179,7 +196,7 @@ function editBook (edit, book) {
         year.value = book.year;
         pages.value = book.pages;
 
-        createForm();
+        renderForm();
 
         form.setAttribute('data-edit-id', createBookID(book));
     });
