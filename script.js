@@ -62,11 +62,6 @@ submit.addEventListener('click', (event) => {
 
 closeForm.addEventListener('click', () => {
     removeForm()
-    title  = '';
-    author = '';
-    year   = '';
-    pages  = '';
-    read   = '';
 });
 
 // Functions for books and form
@@ -93,9 +88,16 @@ function renderForm () {
 };
 
 function removeForm () {
+    title.value  = '';
+    author.value = '';
+    year.value   = '';
+    pages.value  = '';
+    read.value   = '';
+
     cardForm.style.display = 'none'
     document.body.removeChild(overlay);
-}
+    form.removeAttribute('data-edit-id');
+};
 
 function createBookID (book) {
     return `${book.title}-${book.author}-${book.year}-${book.pages}`;
@@ -107,6 +109,7 @@ function displayBook (book) {
         if (!displayedBooks.has(bookID)) {
             let bookCard = document.createElement('div');
             bookCard.classList.add('card');
+            bookCard.setAttribute('data-id', bookID);
 
             let cardContent = document.createElement('div');
             cardContent.classList.add('card-content');
@@ -162,14 +165,15 @@ function updateBookDisplay (book) {
 
     if (existingBookCard) {
         const cardContent = existingBookCard.querySelector('.card-content');
+        const pTags = cardContent.querySelectorAll('p');
 
-        cardContent.querySelector('h2').textContent  = book.title
-        cardContent.querySelector('p').textContent   = book.author
-        cardContent.querySelector('p').textContent   = book.year
-        cardContent.querySelector('p').textContent   = book.pages
-        cardContent.querySelector('p').textContent   = book.read
+        cardContent.querySelector('h2').textContent = book.title;
+        pTags[0].textContent  = book.author;
+        pTags[1].textContent  = book.year;
+        pTags[2].textContent  = book.pages;
+        pTags[3].textContent  = book.read;
     }
-}
+};
 
 function removeBook (remove, element, currentBook) {
     remove.addEventListener('click', () => {
@@ -191,10 +195,10 @@ function toggleRead (isRead) {
 
 function editBook (edit, book) {
     edit.addEventListener('click', () => {
-        title.value = book.title;
+        title.value  = book.title;
         author.value = book.author;
-        year.value = book.year;
-        pages.value = book.pages;
+        year.value   = book.year;
+        pages.value  = book.pages;
 
         renderForm();
 
@@ -203,21 +207,6 @@ function editBook (edit, book) {
 };
 
 //GPT suggestion
-
-// mainContent.addEventListener('click', (event) => {
-//     let editForm = event.target.closest('card');
-//     if (editForm) {
-//         const oldTitle = card.getAttribute('data-title');
-//         const oldAuthor = card.getAttribute('data-author');
-//         const oldYear = card.getAttribute('data-year');
-//         const oldPages = card.getAttribute('data-pages');
-
-//         title.value  = oldTitle;
-//         author.value = oldAuthor;
-//         year.value   = oldYear;
-//         pages.value  = oldPages;
-//     }
-// });
 
 // addBookToLibrary ("LOTR", "Tolkein", 1950, 342, "No")
 // addBookToLibrary ("Thus Spoke Zarathustra", "Nietzsche", 1940, 213, "Yes");
