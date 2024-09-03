@@ -15,16 +15,9 @@ let form        = document.getElementById('form');
 let closeForm   = document.getElementById('closeForm');
 
 let overlay;
-let titleValue;
-let authorValue;
-let yearValue;
-let pagesValue;
-let readValue;
 
 // Event listeners for books
-addBook.addEventListener('click', () => {
-    renderForm()
-});
+addBook.addEventListener('click', renderForm);
 
 submit.addEventListener('click', (event) => {
     event.preventDefault();
@@ -51,18 +44,10 @@ submit.addEventListener('click', (event) => {
         addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
     }
     
-    cardForm.style.display = "none";
-    if (overlay) {
-        document.body.removeChild(overlay);
-    }
-
-    form.reset();
-    form.removeAttribute('data-edit-id');
+    removeForm();
 });
 
-closeForm.addEventListener('click', () => {
-    removeForm()
-});
+closeForm.addEventListener('click', removeForm);
 
 // Functions for books and form
 function Book (title, author, year, pages, read) {
@@ -81,10 +66,12 @@ function addBookToLibrary (title, author, year, pages, read) {
 
 function renderForm () {
     cardForm.style.display = 'block';
-    overlay = document.createElement('section');
-    overlay.id = 'overlay';
-    document.body.appendChild(overlay);
-    overlay.classList.add('overlay');
+    if (!overlay) {
+        overlay = document.createElement('section');
+        overlay.id = 'overlay';
+        overlay.classList.add('overlay');
+        document.body.appendChild(overlay);
+    }
 };
 
 function removeForm () {
@@ -95,12 +82,15 @@ function removeForm () {
     read.value   = '';
 
     cardForm.style.display = 'none'
-    document.body.removeChild(overlay);
+    if (overlay) {
+        document.body.removeChild(overlay);
+        overlay = null;
+    }
     form.removeAttribute('data-edit-id');
 };
 
 function createBookID (book) {
-    return `${book.title}-${book.author}-${book.year}-${book.pages}`;
+    return `${book.title}-${book.author}-${book.year}-${book.pages}`.replace(/\s+/g, '-').toLowerCase();
 };
 
 function displayBook (book) {
@@ -139,20 +129,20 @@ function displayBook (book) {
             buttonsContainer.classList.add('card-buttons');
             bookCard.appendChild(buttonsContainer);
 
-            let bookBtn1 = document.createElement('button');
-            bookBtn1.textContent = 'Read';
-            buttonsContainer.appendChild(bookBtn1);
-            toggleRead(bookBtn1)
+            let readButton = document.createElement('button');
+            readButton.textContent = 'Read';
+            buttonsContainer.appendChild(readButton);
+            toggleRead(readButton)
 
-            let bookBtn2 = document.createElement('button');
-            bookBtn2.textContent = 'Edit';
-            buttonsContainer.appendChild(bookBtn2);
-            editBook(bookBtn2, book);
+            let editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            buttonsContainer.appendChild(editButton);
+            editBook(editButton, book);
 
-            let bookBtn3 = document.createElement('button');
-            bookBtn3.textContent = 'Remove';
-            buttonsContainer.appendChild(bookBtn3);
-            removeBook(bookBtn3, bookCard, bookID);
+            let removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            buttonsContainer.appendChild(removeButton);
+            removeBook(removeButton, bookCard, bookID);
 
             mainContent.appendChild(bookCard);
             displayedBooks.add(bookID);
@@ -161,47 +151,51 @@ function displayBook (book) {
 
 function updateBookDisplay (book) {
     const bookID = createBookID(book);
+    console.log(bookID)
     const existingBookCard = mainContent.querySelector(`.card[data-id='${bookID}']`)
-
+    console.log(existingBookCard);
     if (existingBookCard) {
         const cardContent = existingBookCard.querySelector('.card-content');
+        const h2 = cardContent.querySelector('h2');
         const pTags = cardContent.querySelectorAll('p');
+        console.log(pTags)
 
-        cardContent.querySelector('h2').textContent = book.title;
-        pTags[0].textContent  = book.author;
-        pTags[1].textContent  = book.year;
-        pTags[2].textContent  = book.pages;
-        pTags[3].textContent  = book.read;
+        h2.textContent = book.title;
+        pTags[0].textContent = book.author;
+        pTags[1].textContent = book.year;
+        pTags[2].textContent = book.pages;
+        pTags[3].textContent = book.read;
+    } else {
+        console.log('No card foudn to update')
     }
 };
 
-function removeBook (remove, element, currentBook) {
-    remove.addEventListener('click', () => {
-        element.parentNode.removeChild(element)
+function removeBook (removeButton, bookCard, bookID) {
+    removeButton.addEventListener('click', () => {
+        bookCard.remove();
 
-        const bookToRemove = myLibrary.findIndex(book => book.bookID === currentBook);
-        if (displayedBooks.has(currentBook)) {
-            displayedBooks.delete(currentBook)
+        displayedBooks.delete(bookID);
+        const bookToRemove = myLibrary.findIndex(book => createBookID(book) === bookID);
+        if (bookToRemove !== -1) {
             myLibrary.splice(bookToRemove, 1);
         }
     })
 };
 
-function toggleRead (isRead) {
-    isRead.addEventListener('click', () => {
-        isRead.classList.toggle('active');
+function toggleRead (readButton) {
+    readButton.addEventListener('click', () => {
+        readButton.classList.toggle('active');
     })
 };
 
-function editBook (edit, book) {
-    edit.addEventListener('click', () => {
+function editBook (editButton, book) {
+    editButton.addEventListener('click', () => {
         title.value  = book.title;
         author.value = book.author;
         year.value   = book.year;
         pages.value  = book.pages;
 
         renderForm();
-
         form.setAttribute('data-edit-id', createBookID(book));
     });
 };
