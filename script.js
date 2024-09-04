@@ -50,18 +50,23 @@ submit.addEventListener('click', (event) => {
 closeForm.addEventListener('click', removeForm);
 
 // Functions for books and form
-function Book (title, author, year, pages, read) {
+function Book (title, author, year, pages, read, id) {
     this.title  = title;
     this.author = author;
     this.year   = year;
     this.pages  = pages;
     this.read   = read;
+    this.id     = id;
 };
 
 function addBookToLibrary (title, author, year, pages, read) {
-    let newBook = new Book(title, author, year, pages, read);
-    myLibrary.push(newBook);
-    displayBook(newBook);
+    const id = createBookID({ title, author, year, pages, read });
+    const existingBook = myLibrary.find(book => book.id === id);
+    if (!existingBook) {
+        let newBook = new Book(title, author, year, pages, read, id);
+        myLibrary.push(newBook);
+        displayBook(newBook);
+    }
 };
 
 function renderForm () {
@@ -94,7 +99,7 @@ function createBookID (book) {
 };
 
 function displayBook (book) {
-        const bookID = createBookID(book);
+        const bookID = book.id;
 
         if (!displayedBooks.has(bookID)) {
             let bookCard = document.createElement('div');
@@ -150,7 +155,7 @@ function displayBook (book) {
 };
 
 function updateBookDisplay (book) {
-    const bookID = createBookID(book);
+    const bookID = book.id;
     console.log(bookID)
     const existingBookCard = mainContent.querySelector(`.card[data-id='${bookID}']`)
     console.log(existingBookCard);
@@ -158,7 +163,6 @@ function updateBookDisplay (book) {
         const cardContent = existingBookCard.querySelector('.card-content');
         const h2 = cardContent.querySelector('h2');
         const pTags = cardContent.querySelectorAll('p');
-        console.log(pTags)
 
         h2.textContent = book.title;
         pTags[0].textContent = book.author;
