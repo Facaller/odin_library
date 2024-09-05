@@ -15,6 +15,7 @@ let form        = document.getElementById('form');
 let closeForm   = document.getElementById('closeForm');
 
 let overlay;
+let bookCounter = 1;
 
 // Event listeners for books
 addBook.addEventListener('click', renderForm);
@@ -27,10 +28,10 @@ submit.addEventListener('click', (event) => {
     pagesValue  = pages.value;
     readValue   = read.value;
 
-    const editId = form.getAttribute('data-edit-id');
+    const editId = parseInt(form.getAttribute('data-edit-id'), 10);
 
     if (editId) {
-        const bookToUpdate = myLibrary.find(book => createBookID(book) === editId);
+        const bookToUpdate = myLibrary.find(book => book.id === editId);
         if (bookToUpdate) {
             bookToUpdate.title  = titleValue;
             bookToUpdate.author = authorValue;
@@ -43,7 +44,6 @@ submit.addEventListener('click', (event) => {
     } else {
         addBookToLibrary(titleValue, authorValue, yearValue, pagesValue, readValue);
     }
-    
     removeForm();
 });
 
@@ -56,17 +56,14 @@ function Book (title, author, year, pages, read, id) {
     this.year   = year;
     this.pages  = pages;
     this.read   = read;
-    this.id     = id;
+    this.id     = id
 };
 
 function addBookToLibrary (title, author, year, pages, read) {
-    const id = createBookID({ title, author, year, pages, read });
-    const existingBook = myLibrary.find(book => book.id === id);
-    if (!existingBook) {
-        let newBook = new Book(title, author, year, pages, read, id);
+    const id = generateUniqueId();
+        const newBook = new Book(title, author, year, pages, read, id);
         myLibrary.push(newBook);
         displayBook(newBook);
-    }
 };
 
 function renderForm () {
@@ -94,9 +91,13 @@ function removeForm () {
     form.removeAttribute('data-edit-id');
 };
 
-function createBookID (book) {
-    return `${book.title}-${book.author}-${book.year}-${book.pages}`.replace(/\s+/g, '-').toLowerCase();
+function generateUniqueId () {
+    return bookCounter++;
 };
+
+// function createBookID (book) {
+//     return `${book.title}-${book.author}-${book.year}-${book.pages}`.replace(/\s+/g, '-').toLowerCase();
+// };
 
 function displayBook (book) {
         const bookID = book.id;
@@ -156,9 +157,8 @@ function displayBook (book) {
 
 function updateBookDisplay (book) {
     const bookID = book.id;
-    console.log(bookID)
     const existingBookCard = mainContent.querySelector(`.card[data-id='${bookID}']`)
-    console.log(existingBookCard);
+    
     if (existingBookCard) {
         const cardContent = existingBookCard.querySelector('.card-content');
         const h2 = cardContent.querySelector('h2');
@@ -177,11 +177,10 @@ function updateBookDisplay (book) {
 function removeBook (removeButton, bookCard, bookID) {
     removeButton.addEventListener('click', () => {
         bookCard.remove();
-
         displayedBooks.delete(bookID);
-        const bookToRemove = myLibrary.findIndex(book => createBookID(book) === bookID);
-        if (bookToRemove !== -1) {
-            myLibrary.splice(bookToRemove, 1);
+        const bookIndex = myLibrary.findIndex(book => book.id === bookID);
+        if (bookIndex !== -1) {
+            myLibrary.splice(bookIndex, 1);
         }
     })
 };
@@ -200,7 +199,7 @@ function editBook (editButton, book) {
         pages.value  = book.pages;
 
         renderForm();
-        form.setAttribute('data-edit-id', createBookID(book));
+        form.setAttribute('data-edit-id', book.id);
     });
 };
 
