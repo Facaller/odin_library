@@ -61,9 +61,9 @@ function Book (title, author, year, pages, read, id) {
 
 function addBookToLibrary (title, author, year, pages, read) {
     const id = generateUniqueId();
-        const newBook = new Book(title, author, year, pages, read, id);
-        myLibrary.push(newBook);
-        displayBook(newBook);
+    const newBook = new Book(title, author, year, pages, read, id);
+    myLibrary.push(newBook);
+    displayBook(newBook);
 };
 
 function renderForm () {
