@@ -31,3 +31,54 @@
 4 -     New form inputs should edit current card on screen and in array.
 5 -     Set old data to new data using the function.
 6 -     Set item should be the same with updated details.
+***************************
+Refactor for classes
+
+### 1. **Organize Your Code Structure**
+
+- **Group Related Functions**: Start by grouping functions that deal with similar tasks. For example, functions related to book management (like adding, updating, and removing books) can be in one section, while UI-related functions (like rendering forms and displaying books) can be in another.
+
+### 2. **Create a Library Class**
+
+- **Encapsulate Library Logic**: Consider creating a `Library` class that will manage the collection of books. This class can handle adding and removing books, updating their state, and maintaining the library's state.
+
+### 3. **Utilize Methods within Classes**
+
+- **Refactor Functions as Methods**: Move functions that operate on books or the library into methods of the `Library` class. For example, `addBookToLibrary`, `removeBook`, and `updateBookDisplay` can become methods of the `Library` class.
+
+### 4. **Define Book Functionality**
+
+- **Enhance the Book Class**: If you haven't already, define methods within the `Book` class that allow for behaviors related to a book, like toggling the read status.
+
+### 5. **Use Event Handlers Effectively**
+
+- **Bind Methods to Event Handlers**: Instead of defining event handlers inline, consider creating methods within your classes that handle these events. This can help keep the code organized and maintainable.
+
+### 6. **Implement Utility Functions**
+
+- **Create Helper Functions**: If you have repetitive tasks (like generating a unique ID), you can create utility functions or static methods in the `Library` class.
+
+### 7. **Refactor for Clarity and Readability**
+
+- **Use Descriptive Naming**: Ensure that function and variable names clearly indicate their purpose. This helps anyone reading the code (including yourself) to understand its flow better.
+
+### 8. **Test After Each Change**
+
+- **Incremental Refactoring**: As you refactor, test your code frequently to ensure that you haven’t introduced any bugs. This can help you isolate issues and understand the impact of each change.
+
+### Example Steps
+
+1. **Create a Library Class**:
+   - Define a `Library` class that maintains `myLibrary` and has methods for adding/removing books.
+
+2. **Move Related Functions**:
+   - Move `addBookToLibrary`, `removeBook`, and `updateBookDisplay` into the `Library` class.
+
+3. **Adjust Event Handlers**:
+   - Change your event listeners to call methods on the `Library` instance instead of standalone functions.
+
+4. **Refactor UI Functions**:
+   - Consider creating a `UI` class that handles rendering books and forms. Methods like `renderForm` and `displayBook` can go there.
+
+5. **Update Your Code Base**:
+   - After creating classes, update all parts of your code that reference the old function structure to use the new class methods.
