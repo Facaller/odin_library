@@ -37,6 +37,20 @@ class Library {
         this.elements.addBook.addEventListener('click', () => this.renderForm());
         this.elements.closeForm.addEventListener('click', () => this.removeForm());
         this.elements.submit.addEventListener('click', (event) => this.submitBook(event));
+        this.elements.mainContent.addEventListener('click', (event) => {
+            if (event.target.classList.contains('read-button')) {
+                const bookID = event.target.closest('.card').dataset.id;
+                const book = this.myLibrary.find(book => book.id === bookID);
+                if (book) {
+                    book.read = book.read === 'Read' ? 'Not Read' : 'Read';
+                    event.target.classList.toggle('active');
+                    this.updateBookDisplay(book);
+                }
+            }
+        })
+        this.elements.mainContent.addEventListener('click', (event) => {
+
+        })
     }
 
     addBookToLibrary (title, author, year, pages, read) {
@@ -58,7 +72,7 @@ class Library {
     }
 
     editBook (editButton, book) {
-        this.editButton.addEventListener('click', () => {
+        editButton.addEventListener('click', () => {
             this.elements.title.value  = book.title;
             this.elements.author.value = book.author;
             this.elements.year.value   = book.year;
@@ -164,8 +178,8 @@ class Library {
 
             let readButton = document.createElement('button');
             readButton.textContent = 'Read';
+            readButton.classList.add('read-button');
             buttonsContainer.appendChild(readButton);
-            toggleRead(readButton)
 
             let editButton = document.createElement('button');
             editButton.textContent = 'Edit';
@@ -174,8 +188,8 @@ class Library {
 
             let removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-button');
             buttonsContainer.appendChild(removeButton);
-            this.removeBook(removeButton, bookCard, bookID);
 
             mainContent.appendChild(bookCard);
             this.displayedBooks.add(bookID);
@@ -202,12 +216,8 @@ class Library {
             pTags[3].textContent = book.read;
         } else {
             console.log('No card found to update')
+            return;
         }
     }
-
-    toggleRead (readButton) {
-        readButton.addEventListener('click', () => {
-            readButton.classList.toggle('active');
-        })
-    }
 }
+
