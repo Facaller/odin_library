@@ -37,6 +37,7 @@ class Library {
         this.elements.addBook.addEventListener('click', () => this.renderForm());
         this.elements.closeForm.addEventListener('click', () => this.removeForm());
         this.elements.submit.addEventListener('click', (event) => this.submitBook(event));
+        
         this.elements.mainContent.addEventListener('click', (event) => {
             if (event.target.classList.contains('read-button')) {
                 const bookID = event.target.closest('.card').dataset.id;
@@ -47,9 +48,23 @@ class Library {
                     this.updateBookDisplay(book);
                 }
             }
-        })
-        this.elements.mainContent.addEventListener('click', (event) => {
+        
+            if (event.target.classList.contains('remove-button')) {
+                const bookCard = event.target.closest('.card')
+                const bookID = bookCard.dataset.id
+                bookCard.remove();
+                this.displayedBooks.delete(bookID);
+                
+                const bookIndex = this.myLibrary.findIndex(book => book.id === bookID);
+                if (bookIndex !== - 1) {
+                    this.myLibrary.splice(bookIndex, 1);
+                }
+            }
 
+            if (event.target.classList.contains('edit-button')) {
+                const editButton = event.target.closest('.card');
+                
+            }
         })
     }
 
@@ -58,17 +73,6 @@ class Library {
         const newBook = new Book(title, author, year, pages, read, id);
         this.myLibrary.push(newBook);
         this.displayBook(newBook);
-    }
-
-    removeBook (removeButton, bookCard, bookID) {
-        removeButton.addEventListener('click', () => {
-            bookCard.remove();
-            this.displayedBooks.delete(bookID);
-            const bookIndex = this.myLibrary.findIndex(book => book.id === bookID);
-            if (bookIndex !== -1) {
-                this.myLibrary.splice(bookIndex, 1);
-            }
-        })
     }
 
     editBook (editButton, book) {
@@ -183,8 +187,8 @@ class Library {
 
             let editButton = document.createElement('button');
             editButton.textContent = 'Edit';
+            editButton.classList.add('edit-button');
             buttonsContainer.appendChild(editButton);
-            this.editBook(editButton, book);
 
             let removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
