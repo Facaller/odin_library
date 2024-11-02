@@ -62,8 +62,16 @@ class Library {
             }
 
             if (event.target.classList.contains('edit-button')) {
-                const editButton = event.target.closest('.card');
+                const bookID = event.target.closest('.card').dataset.id;
+                const book = this.myLibrary.find(book => book.id == bookID);
                 
+                this.elements.title.value  = book.title;
+                this.elements.author.value = book.author;
+                this.elements.year.value   = book.year;
+                this.elements.pages.value  = book.pages;
+                this.elements.form.setAttribute('data-edit-id', book.id);
+                this.renderForm();
+                console.log('Edit button works')
             }
         })
     }
@@ -73,18 +81,6 @@ class Library {
         const newBook = new Book(title, author, year, pages, read, id);
         this.myLibrary.push(newBook);
         this.displayBook(newBook);
-    }
-
-    editBook (editButton, book) {
-        editButton.addEventListener('click', () => {
-            this.elements.title.value  = book.title;
-            this.elements.author.value = book.author;
-            this.elements.year.value   = book.year;
-            this.elements.pages.value  = book.pages;
-    
-            this.renderForm();
-            this.elements.form.setAttribute('data-edit-id', book.id);
-        });
     }
 
     submitBook (event) {
@@ -100,10 +96,10 @@ class Library {
                 return
             }
         
-            const editId = parseInt(this.elements.form.getAttribute('data-edit-id'), 10);
+            const editId = this.elements.form.getAttribute('data-edit-id');
         
             if (editId) {
-                const bookToUpdate = this.myLibrary.find(book => book.id === editId);
+                const bookToUpdate = this.myLibrary.find(book => book.id == editId);
                 if (bookToUpdate) {
                     bookToUpdate.title  = titleValue;
                     bookToUpdate.author = authorValue;
@@ -126,15 +122,16 @@ class Library {
             this.overlay.id = 'overlay';
             this.overlay.classList.add('overlay');
             document.body.appendChild(this.overlay);
+            console.log('Render form works')
         }
     }
     
     removeForm () {
-        this.title.value  = '';
-        this.author.value = '';
-        this.year.value   = '';
-        this.pages.value  = '';
-        this.read.value   = '';
+        this.elements.title.value  = '';
+        this.elements.author.value = '';
+        this.elements.year.value   = '';
+        this.elements.pages.value  = '';
+        this.elements.read.value   = '';
     
         this.elements.cardForm.style.display = 'none'
         if (this.overlay) {
@@ -195,7 +192,7 @@ class Library {
             removeButton.classList.add('remove-button');
             buttonsContainer.appendChild(removeButton);
 
-            mainContent.appendChild(bookCard);
+            this.elements.mainContent.appendChild(bookCard);
             this.displayedBooks.add(bookID);
         }
     }
@@ -225,3 +222,6 @@ class Library {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const myLibrary = new Library();
+});
