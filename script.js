@@ -71,12 +71,16 @@ class Library {
                 this.elements.pages.value  = book.pages;
                 this.elements.form.setAttribute('data-edit-id', book.id);
                 this.renderForm();
-                console.log('Edit button works')
             }
         })
     }
 
     addBookToLibrary (title, author, year, pages, read) {
+        if (this.bookExisits(title, author, year, pages)) {
+            alert("This book is already in the library.")
+            return;
+        }
+
         const id = this.generateUniqueId();
         const newBook = new Book(title, author, year, pages, read, id);
         this.myLibrary.push(newBook);
@@ -93,7 +97,7 @@ class Library {
 
             if (!titleValue || !authorValue || !yearValue || !pagesValue) {
                 alert("Please fill in all fields!");
-                return
+                return;
             }
         
             const editId = this.elements.form.getAttribute('data-edit-id');
@@ -115,6 +119,15 @@ class Library {
             this.removeForm();
     }
 
+    bookExisits (title, author, year, pages) {
+        return this.myLibrary.some(book => 
+            book.title   === title  &&
+            book.author  === author &&
+            book.year    === year   &&
+            book.pages   === pages
+        );
+    }
+
     renderForm () {
         this.elements.cardForm.style.display = 'block';
         if (!this.overlay) {
@@ -122,7 +135,6 @@ class Library {
             this.overlay.id = 'overlay';
             this.overlay.classList.add('overlay');
             document.body.appendChild(this.overlay);
-            console.log('Render form works')
         }
     }
     
@@ -145,49 +157,49 @@ class Library {
         const bookID = book.id;
 
         if (!this.displayedBooks.has(bookID)) {
-            let bookCard = document.createElement('div');
+            const bookCard = document.createElement('div');
             bookCard.classList.add('card');
             bookCard.setAttribute('data-id', bookID);
 
-            let cardContent = document.createElement('div');
+            const cardContent = document.createElement('div');
             cardContent.classList.add('card-content');
             bookCard.appendChild(cardContent);
 
-            let bookTitle = document.createElement('h2');
+            const bookTitle = document.createElement('h2');
             bookTitle.textContent = book.title;
             cardContent.appendChild(bookTitle);
 
-            let bookAuthor = document.createElement('p');
+            const bookAuthor = document.createElement('p');
             bookAuthor.textContent = book.author;
             cardContent.appendChild(bookAuthor);
 
-            let bookYear = document.createElement('p');
+            const bookYear = document.createElement('p');
             bookYear.textContent = book.year;
             cardContent.appendChild(bookYear);
 
-            let bookPages = document.createElement('p');
+            const bookPages = document.createElement('p');
             bookPages.textContent = book.pages;
             cardContent.appendChild(bookPages);
 
-            let bookRead = document.createElement('p');
+            const bookRead = document.createElement('p');
             bookRead.textContent = book.read;
             cardContent.appendChild(bookRead);
 
-            let buttonsContainer = document.createElement('div');
+            const buttonsContainer = document.createElement('div');
             buttonsContainer.classList.add('card-buttons');
             bookCard.appendChild(buttonsContainer);
 
-            let readButton = document.createElement('button');
+            const readButton = document.createElement('button');
             readButton.textContent = 'Read';
             readButton.classList.add('read-button');
             buttonsContainer.appendChild(readButton);
 
-            let editButton = document.createElement('button');
+            const editButton = document.createElement('button');
             editButton.textContent = 'Edit';
             editButton.classList.add('edit-button');
             buttonsContainer.appendChild(editButton);
 
-            let removeButton = document.createElement('button');
+            const removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
             removeButton.classList.add('remove-button');
             buttonsContainer.appendChild(removeButton);
@@ -203,7 +215,7 @@ class Library {
 
     updateBookDisplay (book) {
         const bookID = book.id;
-        const existingBookCard = this.mainContent.querySelector(`.card[data-id='${bookID}']`)
+        const existingBookCard = this.elements.mainContent.querySelector(`.card[data-id='${bookID}']`)
         
         if (existingBookCard) {
             const cardContent = existingBookCard.querySelector('.card-content');
