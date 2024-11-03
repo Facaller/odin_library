@@ -89,14 +89,24 @@ class Library {
 
     submitBook (event) {
             event.preventDefault();
+
+            if (this.elements.cardForm.style.display === 'none') {
+                return;
+            }
+
             const titleValue  = this.elements.title.value.trim();
             const authorValue = this.elements.author.value.trim();
             const yearValue   = this.elements.year.value.trim();
             const pagesValue  = this.elements.pages.value.trim();
-            const readValue   = this.elements.read.value.trim();
+            const readValue   = this.elements.read.checked;
 
             if (!titleValue || !authorValue || !yearValue || !pagesValue) {
                 alert("Please fill in all fields!");
+                return;
+            }
+
+            if (this.bookExisits(titleValue, authorValue, yearValue, pagesValue)) {
+                alert("This book is already in the library.")
                 return;
             }
         
