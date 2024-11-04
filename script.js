@@ -45,6 +45,7 @@ class Library {
                 if (book) {
                     book.read = book.read === 'Read' ? 'Not Read' : 'Read';
                     event.target.classList.toggle('active');
+                    event.target.textContent = book.read;
                     this.updateBookDisplay(book);
                 }
             }
@@ -69,6 +70,7 @@ class Library {
                 this.elements.author.value = book.author;
                 this.elements.year.value   = book.year;
                 this.elements.pages.value  = book.pages;
+                this.elements.read.checked = book.read === 'Read'
                 this.elements.form.setAttribute('data-edit-id', book.id);
                 this.renderForm();
             }
@@ -98,14 +100,20 @@ class Library {
             const authorValue = this.elements.author.value.trim();
             const yearValue   = this.elements.year.value.trim();
             const pagesValue  = this.elements.pages.value.trim();
-            const readValue   = this.elements.read.checked;
+            const readValue   = this.elements.read.checked ? 'Read' : 'Not Read';
+
+            if (readValue === true) {
+                this.elements.read.textContent = 'Read'
+            } else {
+                this.elements,read.textContent = 'Not read'
+            }
 
             if (!titleValue || !authorValue || !yearValue || !pagesValue) {
                 alert("Please fill in all fields!");
                 return;
             }
 
-            if (this.bookExisits(titleValue, authorValue, yearValue, pagesValue)) {
+            if (this.bookExisits(titleValue, authorValue, yearValue, pagesValue, readValue)) {
                 alert("This book is already in the library.")
                 return;
             }
@@ -140,6 +148,14 @@ class Library {
 
     renderForm () {
         this.elements.cardForm.style.display = 'block';
+
+        const editId = this.elements.form.getAttribute('data-edit-id')
+        if (editId) {
+            this.elements.read.parentElement.style.display = 'none'
+        } else {
+            this.elements.read.parentElement.style.display = 'block'
+        }
+
         if (!this.overlay) {
             this.overlay = document.createElement('section');
             this.overlay.id = 'overlay';
@@ -153,7 +169,7 @@ class Library {
         this.elements.author.value = '';
         this.elements.year.value   = '';
         this.elements.pages.value  = '';
-        this.elements.read.value   = '';
+        this.elements.read.checked   = false;
     
         this.elements.cardForm.style.display = 'none'
         if (this.overlay) {
@@ -231,12 +247,15 @@ class Library {
             const cardContent = existingBookCard.querySelector('.card-content');
             const h2 = cardContent.querySelector('h2');
             const pTags = cardContent.querySelectorAll('p');
+            const readButton = existingBookCard.querySelector('.read-button');
     
             h2.textContent = book.title;
             pTags[0].textContent = book.author;
             pTags[1].textContent = book.year;
             pTags[2].textContent = book.pages;
             pTags[3].textContent = book.read;
+
+            readButton.textContent = book.read;
         } else {
             console.log('No card found to update')
             return;

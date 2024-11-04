@@ -117,5 +117,5 @@ p, form, input, button {
 }
 
 .active {
-    background-color: red;
+    color: red;
 }
